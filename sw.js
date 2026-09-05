@@ -1,5 +1,5 @@
 // Service Worker for Emploi du Temps PWA
-const CACHE_NAME = 'emploi-pwa-v1';
+const CACHE_NAME = 'emploi-pwa-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
