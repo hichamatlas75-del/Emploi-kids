@@ -194,34 +194,32 @@
   /* DAY TABS */
   .day-tabs{
     display:flex;
-    gap:6px;
-    margin-top:22px;
-    overflow-x:auto;
-    padding-bottom:4px;
-    scrollbar-width:none;
+    gap:4px;
+    margin-top:16px;
+    width:100%;
+    box-sizing:border-box;
   }
-  .day-tabs::-webkit-scrollbar{ display:none; }
   .day-tab{
-    flex:1 0 auto;
+    flex:1 1 0;
+    min-width:0;
     font-family:'Tajawal', sans-serif;
     font-weight:700;
-    font-size:14px;
+    font-size:12.5px;
     color:var(--ink-soft);
     background:var(--card);
-    border:2px solid var(--paper-line);
-    border-radius:12px;
-    padding:10px 6px;
+    border:1.5px solid var(--paper-line);
+    border-radius:10px;
+    padding:8px 2px;
     text-align:center;
     cursor:pointer;
     transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    min-width:64px;
   }
-  .day-tab .n{ display:block; font-size:11px; font-weight:500; color:var(--ink-soft); opacity:0.7; margin-top:2px;}
+  .day-tab .n{ display:block; font-size:10px; font-weight:500; color:var(--ink-soft); opacity:0.7; margin-top:2px;}
   .day-tab.active{
     background:var(--ink);
     color:#FFFFFF;
     border-color:var(--ink);
-    transform:translateY(-2px);
+    transform:translateY(-1px);
   }
   .day-tab.active .n{ color:#38BDF8; opacity:1;}
   .day-tab.today{
@@ -234,13 +232,13 @@
     display:block;
     background:#0284C7;
     color:#FFFFFF;
-    font-size:9.5px;
+    font-size:8.5px;
     font-weight:800;
-    padding:1px 5px;
+    padding:1px 3px;
     border-radius:999px;
     margin:2px auto 0;
     width:fit-content;
-    line-height:1.2;
+    line-height:1.1;
   }
 
   /* TODAY (JOUR J) BANNER */
@@ -713,11 +711,11 @@
   <!-- VIEW SWITCHER (Par Jour vs Tous les Jours) -->
   <div class="view-switch-row">
     <div class="view-switch">
-      <button type="button" class="view-switch-btn active" id="btnViewAll" onclick="setViewMode('all')">
-        <span>📋 كل الأيام معاً</span>
-      </button>
-      <button type="button" class="view-switch-btn" id="btnViewTabs" onclick="setViewMode('tabs')">
+      <button type="button" class="view-switch-btn active" id="btnViewTabs" onclick="setViewMode('tabs')">
         <span>📑 يوم بيوم</span>
+      </button>
+      <button type="button" class="view-switch-btn" id="btnViewAll" onclick="setViewMode('all')">
+        <span>📋 كل الأيام معاً</span>
       </button>
     </div>
   </div>
@@ -874,7 +872,7 @@ function buildPanels(){
   });
 }
 
-let currentViewMode = localStorage.getItem("emploi_adam_view_mode") || "all";
+let currentViewMode = localStorage.getItem("emploi_adam_view_mode") || "tabs";
 
 function setViewMode(mode){
   currentViewMode = mode;
