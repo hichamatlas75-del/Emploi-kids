@@ -302,9 +302,66 @@
     transform: translateY(-1px);
   }
 
+  /* VIEW SWITCH (Tous les jours vs Jour par jour) */
+  .view-switch-row{
+    display:flex;
+    justify-content:center;
+    margin-top:16px;
+  }
+  .view-switch{
+    display:inline-flex;
+    background:rgba(15,23,42,0.06);
+    border-radius:12px;
+    padding:4px;
+    gap:4px;
+    border:1px solid var(--paper-line);
+  }
+  .view-switch-btn{
+    font-family:'Tajawal', sans-serif;
+    font-size:13px;
+    font-weight:800;
+    padding:7px 16px;
+    border-radius:9px;
+    border:none;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition: all 0.15s ease;
+  }
+  .view-switch-btn.active{
+    background:var(--card);
+    color:var(--ink);
+    box-shadow: 0 2px 8px rgba(15,23,42,0.08);
+  }
+
   /* SCHEDULE */
   .day-panel{ display:none; margin-top:18px; }
   .day-panel.active{ display:block; }
+
+  /* Mode Tous les jours sur la même page */
+  body.show-all-days .day-tabs{
+    display:flex;
+    position:sticky;
+    top:8px;
+    z-index:20;
+    background:rgba(241, 245, 249, 0.92);
+    backdrop-filter:blur(8px);
+    padding:6px 2px;
+    border-radius:14px;
+  }
+  body.show-all-days .day-panel{
+    display:block !important;
+    margin-top:24px;
+    padding-top:8px;
+    border-top:1px dashed var(--paper-line);
+  }
+  body.show-all-days .day-panel:first-of-type{
+    border-top:none;
+    margin-top:16px;
+  }
 
   .day-heading{
     font-family:'Tajawal', sans-serif;
@@ -653,6 +710,18 @@
     </button>
   </div>
 
+  <!-- VIEW SWITCHER (Par Jour vs Tous les Jours) -->
+  <div class="view-switch-row">
+    <div class="view-switch">
+      <button type="button" class="view-switch-btn active" id="btnViewAll" onclick="setViewMode('all')">
+        <span>📋 كل الأيام معاً</span>
+      </button>
+      <button type="button" class="view-switch-btn" id="btnViewTabs" onclick="setViewMode('tabs')">
+        <span>📑 يوم بيوم</span>
+      </button>
+    </div>
+  </div>
+
   <div class="day-tabs" id="dayTabs"></div>
 
   <div id="dayPanels"></div>
@@ -805,9 +874,37 @@ function buildPanels(){
   });
 }
 
+let currentViewMode = localStorage.getItem("emploi_adam_view_mode") || "all";
+
+function setViewMode(mode){
+  currentViewMode = mode;
+  localStorage.setItem("emploi_adam_view_mode", mode);
+  
+  const btnAll = document.getElementById("btnViewAll");
+  const btnTabs = document.getElementById("btnViewTabs");
+  
+  if(mode === "all"){
+    document.body.classList.add("show-all-days");
+    if(btnAll) btnAll.classList.add("active");
+    if(btnTabs) btnTabs.classList.remove("active");
+  } else {
+    document.body.classList.remove("show-all-days");
+    if(btnAll) btnAll.classList.remove("active");
+    if(btnTabs) btnTabs.classList.add("active");
+  }
+}
+
 function selectDay(i){
   document.querySelectorAll(".day-tab").forEach((el,idx)=> el.classList.toggle("active", idx===i));
   document.querySelectorAll(".day-panel").forEach((el,idx)=> el.classList.toggle("active", idx===i));
+  
+  // If in all-days mode, smooth scroll to the selected day panel
+  if(currentViewMode === "all"){
+    const targetPanel = document.getElementById("panel-" + DAYS[i].key);
+    if(targetPanel){
+      targetPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 }
 
 const SLOTS = [
@@ -989,6 +1086,7 @@ function detectCurrentDay(interactive = false){
   buildTabs();
   buildPanels();
   buildPrintSheet();
+  setViewMode(currentViewMode);
   detectCurrentDay(false);
 
   // Mise à jour automatique chaque minute (détection séance en cours)
