@@ -1,0 +1,57 @@
+{
+  "name": "استعمال الزمن المدرسي | ثانوية عبد الكريم الرايس",
+  "short_name": "جداول الحصص",
+  "description": "بوابة وجداول استعمال الزمن التفاعلية لثانوية عبد الكريم الرايس - فاس",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "جدول حمزة (1 بك ع ت)",
+      "short_name": "حمزة",
+      "url": "./emploi_hamza.html",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "جدول آدم وريان (2 بك ع ف)",
+      "short_name": "آدم وريان",
+      "url": "./emploi_adam_rayane.html",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
