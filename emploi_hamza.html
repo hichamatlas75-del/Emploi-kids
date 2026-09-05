@@ -388,22 +388,17 @@
 
   /* PRINT SHEET (Offscreen container for PDF capture and browser print) */
   .print-sheet-wrap{
-    position:absolute;
-    left:-99999px;
-    top:0;
-    width:1080px;
-    direction:ltr; /* keeps positioning coordinates non-negative */
-    background:#FFFFFF;
-    margin:0;
-    padding:0;
+    display:none;
   }
   .print-sheet-wrap.generating{
-    position:absolute;
+    position:fixed;
     left:0;
     top:0;
     width:1080px;
     z-index:999999;
     display:block;
+    background:#FFFFFF;
+    direction:ltr;
   }
   .print-sheet{
     width:1080px;
