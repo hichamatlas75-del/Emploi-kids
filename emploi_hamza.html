@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جدول حمزة — الأولى بكالوريا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F6F4;
+    --paper-line:#DDE7E2;
+    --ink:#1B2420;
+    --ink-soft:#5B6961;
+    --accent:#7A8B5E;
+    --card:#FFFFFF;
+    --shadow-hard: 4px 4px 0 rgba(27,36,32,0.08);
+
+    --c-arabe:#E63946;
+    --c-francais:#457B9D;
+    --c-anglais:#1D9A9A;
+    --c-maths:#5B5F97;
+    --c-svt:#2A9D8F;
+    --c-pc:#588157;
+    --c-islam:#BC8A3D;
+    --c-philo:#8E44AD;
+    --c-hg:#E76F51;
+    --c-eps:#EE9B00;
+    --c-libre:#B8C4BC;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html, body{ overflow-x:hidden; }
+
+  body{
+    background:
+      linear-gradient(var(--paper-line) 1px, transparent 1px) 0 0 / 100% 42px,
+      var(--paper);
+    color:var(--ink);
+    font-family:'Almarai', sans-serif;
+    min-height:100vh;
+    padding:28px 16px 60px;
+  }
+
+  .page{ max-width:680px; margin:0 auto; }
+
+  .nav-back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Tajawal', sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    text-decoration:none;
+    margin-bottom:14px;
+    padding:6px 12px;
+    border-radius:10px;
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    transition: all 0.15s ease;
+  }
+  .nav-back-link:hover{
+    background:var(--ink);
+    color:#FFFFFF;
+    border-color:var(--ink);
+    transform: translateX(2px);
+  }
+  .nav-back-link svg{ width:16px; height:16px; }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:22px;
+    padding:34px 26px 28px;
+    overflow:hidden;
+    box-shadow: var(--shadow-hard);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    opacity:0.5;
+  }
+  .hero-top{
+    position:relative;
+    display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+  }
+  .hero-school{
+    font-family:'Tajawal', sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:#B9C9BE;
+    line-height:1.6;
+  }
+  .hero-year{
+    font-family:'Tajawal', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink);
+    background:#D4E09B;
+    padding:4px 12px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .hero-name{
+    position:relative;
+    font-family:'Tajawal', sans-serif;
+    font-weight:900;
+    font-size:44px;
+    line-height:1.15;
+    margin-top:18px;
+  }
+  .hero-name span{ color:#D4E09B; }
+  .hero-class{
+    position:relative;
+    margin-top:10px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .hero-class .badge{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:15px;
+    letter-spacing:0.5px;
+    border:1.5px solid rgba(255,255,255,0.35);
+    border-radius:10px;
+    padding:5px 12px;
+  }
+  .hero-class .sub{
+    font-size:13px;
+    color:#B9C9BE;
+  }
+
+  /* DAY TABS */
+  .day-tabs{
+    display:flex;
+    gap:6px;
+    margin-top:22px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
+  }
+  .day-tabs::-webkit-scrollbar{ display:none; }
+  .day-tab{
+    flex:1 0 auto;
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink-soft);
+    background:var(--card);
+    border:2px solid var(--paper-line);
+    border-radius:12px;
+    padding:10px 6px;
+    text-align:center;
+    cursor:pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    min-width:64px;
+  }
+  .day-tab .n{ display:block; font-size:11px; font-weight:500; color:var(--ink-soft); opacity:0.7; margin-top:2px;}
+  .day-tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+    transform:translateY(-2px);
+  }
+  .day-tab.active .n{ color:#B9C9BE; opacity:1;}
+  .day-tab.today{
+    border-color:#10B981;
+  }
+  .day-tab.today:not(.active){
+    color:#10B981;
+  }
+  .badge-today-tab{
+    display:block;
+    background:#10B981;
+    color:#FFFFFF;
+    font-size:9.5px;
+    font-weight:800;
+    padding:1px 5px;
+    border-radius:999px;
+    margin:2px auto 0;
+    width:fit-content;
+    line-height:1.2;
+  }
+
+  /* TODAY (JOUR J) BANNER */
+  .today-banner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--card);
+    border:1.5px solid var(--paper-line);
+    border-radius:14px;
+    padding:10px 16px;
+    margin-top:14px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.03);
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .today-info{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Tajawal', sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .today-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#10B981;
+    display:inline-block;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.25);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot{
+    0%{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.45); }
+    70%{ transform: scale(1); box-shadow: 0 0 0 7px rgba(16,185,129,0); }
+    100%{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  }
+  .btn-today{
+    font-family:'Tajawal', sans-serif;
+    font-size:12.5px;
+    font-weight:800;
+    background:var(--paper);
+    border:1.5px solid var(--paper-line);
+    color:var(--ink);
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    transition: all 0.15s ease;
+  }
+  .btn-today:hover{
+    background:var(--ink);
+    color:#FFFFFF;
+    border-color:var(--ink);
+    transform: translateY(-1px);
+  }
+
+  /* SCHEDULE */
+  .day-panel{ display:none; margin-top:18px; }
+  .day-panel.active{ display:block; }
+
+  .day-heading{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:18px;
+    margin-bottom:4px;
+  }
+  .day-total{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:16px;
+  }
+
+  .period{
+    position:relative;
+    display:flex;
+    gap:14px;
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    box-shadow: 3px 3px 0 rgba(27,36,32,0.05);
+    border-inline-start: 6px solid var(--c);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .period.current-now{
+    border: 2px solid #10B981 !important;
+    background: #F0FDF4 !important;
+    box-shadow: 0 0 14px rgba(16,185,129,0.18) !important;
+    transform: translateY(-1px);
+  }
+  .live-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    background:#10B981;
+    color:#FFFFFF;
+    font-size:10px;
+    font-weight:800;
+    padding:2px 7px;
+    border-radius:999px;
+    margin-inline-start:6px;
+    vertical-align:middle;
+  }
+  .period.pause{
+    background:transparent;
+    box-shadow:none;
+    border:1.5px dashed var(--paper-line);
+    align-items:center;
+    color:var(--ink-soft);
+    font-size:13px;
+    padding:8px 16px;
+  }
+  .period.libre{
+    border-inline-start-color: var(--c-libre);
+    opacity:0.75;
+  }
+  .p-time{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:14px;
+    color:var(--ink);
+    min-width:74px;
+    line-height:1.3;
+  }
+  .p-time .dur{
+    display:block;
+    font-size:10px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .p-body{ flex:1; }
+  .p-subject{
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:15.5px;
+  }
+  .p-room{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+
+  .foot-note{
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:28px;
+    line-height:1.7;
+  }
+
+  @media (max-width:380px){
+    .hero-name{ font-size:36px; }
+    .p-time{ min-width:64px; font-size:13px; }
+  }
+
+  /* ACTIONS BUTTONS */
+  .actions-row{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap:wrap;
+  }
+  .btn-download, .btn-print{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    flex:1 1 200px;
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:14px;
+    border:none;
+    border-radius:12px;
+    padding:13px 16px;
+    cursor:pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.18);
+  }
+  .btn-download{
+    background:#D4E09B;
+  }
+  .btn-print{
+    background:#FFFFFF;
+    border:2px solid var(--paper-line);
+    color:var(--ink);
+  }
+  .btn-download:hover, .btn-print:hover{ transform:translateY(-1px); }
+  .btn-download:active, .btn-print:active{ transform:translateY(1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.18); }
+  .btn-download.loading{ opacity:0.7; pointer-events:none; }
+  .btn-download svg, .btn-print svg{ width:17px; height:17px; flex-shrink:0; }
+
+  /* PRINT SHEET (Offscreen container for PDF capture and browser print) */
+  .print-sheet-wrap{
+    position:absolute;
+    left:-99999px;
+    top:0;
+    width:1080px;
+    direction:ltr; /* keeps positioning coordinates non-negative */
+    background:#FFFFFF;
+    margin:0;
+    padding:0;
+  }
+  .print-sheet-wrap.generating{
+    position:absolute;
+    left:0;
+    top:0;
+    width:1080px;
+    z-index:999999;
+    display:block;
+  }
+  .print-sheet{
+    width:1080px;
+    background:#FFFFFF;
+    font-family:'Almarai', sans-serif;
+    color:#1B2420;
+    padding:24px 28px 20px;
+    direction:rtl; /* Arabic text and table flow */
+    box-sizing:border-box;
+  }
+  .print-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:3px solid #1B2420;
+    padding-bottom:12px;
+    margin-bottom:14px;
+  }
+  .print-head-info{
+    text-align:right;
+  }
+  .print-head-name{
+    font-family:'Tajawal', sans-serif;
+    font-weight:900;
+    font-size:26px;
+    color:#1B2420;
+    line-height:1.2;
+  }
+  .print-head-name span{ color:var(--accent); }
+  .print-head-class{
+    font-family:'Tajawal', sans-serif;
+    font-size:13px;
+    color:#5B6961;
+    margin-top:5px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .badge-class{
+    background:#1B2420;
+    color:#FFFFFF;
+    font-weight:800;
+    font-size:11.5px;
+    padding:3px 8px;
+    border-radius:6px;
+    letter-spacing:0.5px;
+  }
+  .print-head-school{
+    text-align:left;
+    font-family:'Tajawal', sans-serif;
+    line-height:1.5;
+  }
+  .print-head-school .school-name{
+    font-size:14.5px;
+    font-weight:800;
+    color:#1B2420;
+  }
+  .print-head-school .school-year{
+    display:inline-block;
+    font-size:11.5px;
+    font-weight:700;
+    color:#1B2420;
+    background:#D4E09B;
+    padding:2px 10px;
+    border-radius:999px;
+    margin-top:4px;
+  }
+
+  table.print-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  table.print-table th, table.print-table td{
+    border:1.5px solid #D7DFDB;
+    text-align:center;
+    vertical-align:middle;
+  }
+  table.print-table th{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:14px;
+    background:#1B2420;
+    color:#FFFFFF;
+    padding:8px 4px;
+  }
+  td.slot-time{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:11.5px;
+    background:#F3F6F4;
+    color:#1B2420;
+    padding:6px 2px;
+    line-height:1.2;
+  }
+  tr.pause-row td.pause-cell{
+    background:repeating-linear-gradient(45deg, #F3F6F4, #F3F6F4 8px, #E9EFEA 8px, #E9EFEA 16px);
+    color:#5B6961;
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:13px;
+    padding:6px;
+    letter-spacing:0.5px;
+  }
+  td.subj-cell{
+    padding:6px 4px;
+    position:relative;
+  }
+  td.subj-cell .sname{
+    font-family:'Tajawal', sans-serif;
+    font-weight:800;
+    font-size:13px;
+    line-height:1.25;
+  }
+  td.subj-cell .sroom{
+    font-size:11px;
+    color:#4C5851;
+    font-weight:600;
+    margin-top:2px;
+  }
+  td.subj-cell .sdur{
+    font-size:9.5px;
+    color:#5B6961;
+    font-weight:700;
+    margin-top:1px;
+    opacity:0.85;
+  }
+  td.empty-cell{ background:#FAFBFA; }
+
+  .print-legend{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px 16px;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px dashed #D7DFDB;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Tajawal', sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    color:#4A564F;
+  }
+  .legend-dot{
+    width:10px;
+    height:10px;
+    border-radius:3px;
+    display:inline-block;
+  }
+
+  /* NATIVE BROWSER PRINT (@media print) */
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 6mm;
+    }
+    html, body {
+      background:#FFFFFF !important;
+      padding:0 !important;
+      margin:0 !important;
+      min-height:auto !important;
+    }
+    .page {
+      display:none !important;
+    }
+    .print-sheet-wrap {
+      position:static !important;
+      left:0 !important;
+      top:0 !important;
+      width:100% !important;
+      display:block !important;
+      margin:0 !important;
+      padding:0 !important;
+      direction:rtl !important;
+    }
+    .print-sheet {
+      width:100% !important;
+      padding:0 !important;
+      direction:rtl !important;
+    }
+    table.print-table {
+      page-break-inside:avoid;
+    }
+    .print-legend {
+      page-break-inside:avoid;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a href="./index.html" class="nav-back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    <span>العودة للبوابة الرئيسية</span>
+  </a>
+
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-school">
+        الثانوية التأهيلية<br>عبد الكريم الرايس — فاس
+      </div>
+      <div class="hero-year">2026 – 2027</div>
+    </div>
+    <div class="hero-name">جدول حمزة <span>📘</span></div>
+    <div class="hero-class">
+      <div class="badge">1 بك ع ت خ ف 2</div>
+      <div class="sub">السنة الأولى بكالوريا</div>
+    </div>
+  </div>
+
+  <div class="actions-row">
+    <button class="btn-download" id="downloadBtn" onclick="downloadPDF()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+      <span id="downloadBtnLabel">تحميل الجدول PDF</span>
+    </button>
+    <button class="btn-print" id="printBtn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      <span>طباعة مباشرة</span>
+    </button>
+  </div>
+
+  <div class="today-banner" id="todayBanner">
+    <div class="today-info">
+      <span class="today-dot"></span>
+      <span id="todayDateText">جاري تحديد اليوم...</span>
+    </div>
+    <button class="btn-today" id="btnGoToToday" onclick="detectCurrentDay(true)">
+      📍 اليوم الحالي (Jour J)
+    </button>
+  </div>
+
+  <div class="day-tabs" id="dayTabs"></div>
+
+  <div id="dayPanels"></div>
+
+  <div class="foot-note">
+    تم إعداد هذا الجدول اعتمادًا على صورة الجدول الرسمي.<br>
+    إذا لاحظت أي اختلاف في حصة معينة، أخبرني وسأصححها فورًا 🙂
+  </div>
+
+</div>
+
+<div class="print-sheet-wrap" id="printSheetWrap"><div class="print-sheet" id="printSheet"></div></div>
+
+<script>
+const SUBJECTS = {
+  arabe:   { name: "اللغة العربية",        color: "#E63946", bg: "#FDEAEB" },
+  francais:{ name: "اللغة الفرنسية",       color: "#316F99", bg: "#EBF3F8" },
+  anglais: { name: "اللغة الإنجليزية",     color: "#188A8A", bg: "#E5F7F7" },
+  maths:   { name: "الرياضيات",            color: "#575B94", bg: "#EFEFF7" },
+  svt:     { name: "علوم الحياة والأرض",   color: "#279689", bg: "#E6F6F4" },
+  pc:      { name: "الفيزياء والكيمياء",   color: "#4A7849", bg: "#EBF3EB" },
+  islam:   { name: "التربية الإسلامية",    color: "#B38032", bg: "#FAF3E6" },
+  philo:   { name: "الفلسفة",              color: "#833C9F", bg: "#F4EAF8" },
+  hg:      { name: "الاجتماعيات",          color: "#D96043", bg: "#FCEEEA" },
+  eps:     { name: "التربية البدنية",      color: "#D98800", bg: "#FEF5E5" },
+};
+
+// day index matches JS getDay(): 0=Sunday ... 6=Saturday
+const DAYS = [
+  { key:"lundi",    label:"الإثنين",  short:"01", jsDay:1,
+    periods:[
+      {from:"08:00", to:"09:00", subj:"arabe",  room:"القاعة 18"},
+      {from:"09:00", to:"10:00", subj:"anglais",room:"القاعة 20"},
+      {from:"10:00", to:"12:00", subj:"svt",    room:"القاعة 9"},
+      {from:"12:00", to:"14:00", pause:true},
+      {from:"15:00", to:"16:00", subj:"pc",     room:"القاعة 6"},
+      {from:"16:00", to:"17:00", subj:"hg",     room:"القاعة 12"},
+    ]},
+  { key:"mardi",    label:"الثلاثاء", short:"02", jsDay:2,
+    periods:[
+      {from:"08:00", to:"09:00", subj:"eps",     room:"الملعب 1"},
+      {from:"09:00", to:"10:00", subj:"francais",room:"القاعة 16"},
+      {from:"12:00", to:"14:00", pause:true},
+      {from:"14:00", to:"16:00", subj:"svt",     room:"القاعة 9"},
+      {from:"16:00", to:"17:00", subj:"philo",   room:"القاعة 16"},
+      {from:"17:00", to:"18:00", subj:"arabe",   room:"القاعة 18"},
+    ]},
+  { key:"mercredi", label:"الأربعاء", short:"03", jsDay:3,
+    periods:[
+      {from:"08:00", to:"09:00", subj:"francais",room:"القاعة 16"},
+      {from:"09:00", to:"10:00", subj:"islam",   room:"القاعة 15"},
+      {from:"10:00", to:"12:00", subj:"maths",   room:"القاعة 5"},
+      {from:"12:00", to:"14:00", pause:true},
+      {from:"15:00", to:"16:00", subj:"hg",      room:"القاعة 12"},
+      {from:"16:00", to:"17:00", subj:"philo",   room:"القاعة 16"},
+      {from:"17:00", to:"18:00", subj:"francais",room:"القاعة 16"},
+    ]},
+  { key:"jeudi",    label:"الخميس",  short:"04", jsDay:4,
+    periods:[
+      {from:"08:00", to:"09:00", subj:"maths",  room:"القاعة 5"},
+      {from:"09:00", to:"10:00", subj:"eps",    room:"الملعب 1"},
+      {from:"10:00", to:"12:00", subj:"pc",     room:"القاعة 6"},
+      {from:"12:00", to:"14:00", pause:true},
+      {from:"15:00", to:"16:00", subj:"islam",  room:"القاعة 15"},
+      {from:"16:00", to:"17:00", subj:"anglais",room:"القاعة 20"},
+      {from:"17:00", to:"18:00", subj:"francais",room:"القاعة 16"},
+    ]},
+  { key:"vendredi", label:"الجمعة",  short:"05", jsDay:5,
+    periods:[
+      {from:"08:00", to:"09:00", subj:"francais",room:"القاعة 16"},
+      {from:"09:00", to:"10:00", subj:"anglais", room:"القاعة 20"},
+      {from:"10:00", to:"12:00", subj:"maths",   room:"القاعة 5"},
+    ]},
+  { key:"samedi",   label:"السبت",   short:"06", jsDay:6,
+    periods:[
+      {from:"08:00", to:"10:00", subj:"francais",room:"القاعة 16"},
+    ]},
+];
+
+function durationLabel(from, to){
+  const [fh] = from.split(":").map(Number);
+  const [th] = to.split(":").map(Number);
+  const h = th - fh;
+  return h + (h===1 ? " ساعة" : " ساعات");
+}
+
+function isNow(from, to){
+  const now = new Date();
+  const [fh, fm = 0] = from.split(":").map(Number);
+  const [th, tm = 0] = to.split(":").map(Number);
+  const curMin = now.getHours() * 60 + now.getMinutes();
+  return curMin >= (fh * 60 + fm) && curMin < (th * 60 + tm);
+}
+
+function buildTabs(){
+  const wrap = document.getElementById("dayTabs");
+  wrap.innerHTML = "";
+  const today = new Date().getDay();
+  DAYS.forEach((d, i) => {
+    const btn = document.createElement("div");
+    const isToday = d.jsDay === today;
+    btn.className = "day-tab" + (isToday ? " today" : "");
+    btn.innerHTML = d.label + 
+      (isToday ? '<span class="badge-today-tab">اليوم</span>' : '') +
+      '<span class="n">' + d.short + "</span>";
+    btn.onclick = () => selectDay(i);
+    btn.dataset.index = i;
+    wrap.appendChild(btn);
+  });
+}
+
+function buildPanels(){
+  const wrap = document.getElementById("dayPanels");
+  wrap.innerHTML = "";
+  const today = new Date().getDay();
+
+  DAYS.forEach((d, i) => {
+    const panel = document.createElement("div");
+    panel.className = "day-panel";
+    panel.id = "panel-" + d.key;
+
+    const classHours = d.periods.filter(p=>!p.pause).reduce((s,p)=> s + (Number(p.to.split(":")[0]) - Number(p.from.split(":")[0])), 0);
+
+    let html = `<div class="day-heading">${d.label} ${d.jsDay === today ? '<span class="live-badge">📍 اليوم الحالي</span>' : ''}</div>
+                <div class="day-total">${classHours} ساعات دراسية</div>`;
+
+    d.periods.forEach(p => {
+      if(p.pause){
+        const isCurrentPause = (d.jsDay === today) && isNow(p.from, p.to);
+        html += `<div class="period pause${isCurrentPause ? " current-now" : ""}">
+                    <div class="p-time">${p.from} – ${p.to}</div>
+                    <div class="p-body">🍽️ استراحة الغداء ${isCurrentPause ? '<span class="live-badge">● الآن</span>' : ''}</div>
+                  </div>`;
+      } else {
+        const s = SUBJECTS[p.subj];
+        const isCurrent = (d.jsDay === today) && isNow(p.from, p.to);
+        html += `<div class="period${isCurrent ? " current-now" : ""}" style="--c:${s.color}">
+                    <div class="p-time">${p.from} – ${p.to}<span class="dur">${durationLabel(p.from,p.to)}</span></div>
+                    <div class="p-body">
+                      <div class="p-subject">${s.name} ${isCurrent ? '<span class="live-badge">● جارية الآن</span>' : ''}</div>
+                      <div class="p-room">${p.room}</div>
+                    </div>
+                  </div>`;
+      }
+    });
+
+    panel.innerHTML = html;
+    wrap.appendChild(panel);
+  });
+}
+
+function selectDay(i){
+  document.querySelectorAll(".day-tab").forEach((el,idx)=> el.classList.toggle("active", idx===i));
+  document.querySelectorAll(".day-panel").forEach((el,idx)=> el.classList.toggle("active", idx===i));
+}
+
+const SLOTS = [
+  {from:"08:00", to:"09:00"},
+  {from:"09:00", to:"10:00"},
+  {from:"10:00", to:"11:00"},
+  {from:"11:00", to:"12:00"},
+  {from:"12:00", to:"14:00", pause:true},
+  {from:"14:00", to:"15:00"},
+  {from:"15:00", to:"16:00"},
+  {from:"16:00", to:"17:00"},
+  {from:"17:00", to:"18:00"},
+];
+
+function findPeriod(day, slotFrom){
+  return day.periods.find(p => !p.pause && p.from <= slotFrom && p.to > slotFrom);
+}
+
+function buildPrintSheet(){
+  const sheet = document.getElementById("printSheet");
+
+  let html = `<div class="print-head">
+                <div class="print-head-info">
+                  <div class="print-head-name">جدول الحصص الأسبوعي — <span>حمزة</span> 📘</div>
+                  <div class="print-head-class">
+                    <span class="badge-class">1 بك ع ت خ ف 2</span>
+                    <span>السنة الأولى بكالوريا — علوم تجريبية خيار فرنسية</span>
+                  </div>
+                </div>
+                <div class="print-head-school">
+                  <div class="school-name">الثانوية التأهيلية عبد الكريم الرايس — فاس</div>
+                  <div class="school-year">الموسم الدراسي: 2026 – 2027</div>
+                </div>
+              </div>
+              <table class="print-table">
+                <thead>
+                  <tr>
+                    <th style="width:10%;">التوقيت</th>
+                    ${DAYS.map(d=>`<th style="width:15%;">${d.label}</th>`).join("")}
+                  </tr>
+                </thead>
+                <tbody>`;
+
+  const spanRemaining = {};
+  DAYS.forEach(d => { spanRemaining[d.key] = 0; });
+
+  SLOTS.forEach(slot => {
+    if(slot.pause){
+      html += `<tr class="pause-row">
+                 <td class="slot-time">${slot.from}<br>–<br>${slot.to}</td>
+                 <td class="pause-cell" colspan="${DAYS.length}">🍽️ استراحة الغداء</td>
+               </tr>`;
+      return;
+    }
+
+    html += `<tr><td class="slot-time">${slot.from}<br>–<br>${slot.to}</td>`;
+
+    DAYS.forEach(d => {
+      if(spanRemaining[d.key] > 0){
+        spanRemaining[d.key]--;
+        return;
+      }
+
+      const periodStarting = d.periods.find(p => !p.pause && p.from === slot.from);
+
+      if(periodStarting){
+        const s = SUBJECTS[periodStarting.subj];
+        const [fromH] = periodStarting.from.split(":").map(Number);
+        const [toH] = periodStarting.to.split(":").map(Number);
+        const durationHours = toH - fromH;
+        const span = durationHours > 1 ? durationHours : 1;
+
+        if(span > 1){
+          spanRemaining[d.key] = span - 1;
+        }
+
+        const rowspanAttr = span > 1 ? ` rowspan="${span}"` : "";
+        html += `<td class="subj-cell"${rowspanAttr} style="background:${s.bg}; border-inline-start:4px solid ${s.color};">
+                    <div class="sname" style="color:${s.color};">${s.name}</div>
+                    <div class="sroom">${periodStarting.room}</div>
+                    ${span > 1 ? `<div class="sdur">${durationHours} ساعات</div>` : ""}
+                  </td>`;
+      } else {
+        html += `<td class="empty-cell"></td>`;
+      }
+    });
+
+    html += `</tr>`;
+  });
+
+  html += `</tbody></table>
+           <div class="print-legend">
+             ${Object.values(SUBJECTS).map(s=>`<div class="legend-item"><span class="legend-dot" style="background:${s.color};"></span><span>${s.name}</span></div>`).join("")}
+           </div>`;
+
+  sheet.innerHTML = html;
+}
+
+async function downloadPDF(){
+  const btn = document.getElementById("downloadBtn");
+  const label = document.getElementById("downloadBtnLabel");
+  const wrap = document.getElementById("printSheetWrap");
+  btn.classList.add("loading");
+  label.textContent = "...جارٍ التحضير";
+
+  try{
+    if(document.fonts && document.fonts.ready){ await document.fonts.ready; }
+
+    buildPrintSheet();
+
+    wrap.classList.add("generating");
+    wrap.scrollTop = 0;
+    wrap.scrollLeft = 0;
+
+    // Small delay for clean DOM paint
+    await new Promise(r => setTimeout(r, 150));
+
+    const sheet = document.getElementById("printSheet");
+
+    const opt = {
+      margin: 6,
+      filename: "emploi_du_temps_hamza.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#FFFFFF",
+        width: 1080,
+        windowWidth: 1080,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }
+    };
+
+    await html2pdf().set(opt).from(sheet).save();
+  } catch(err){
+    console.error(err);
+    alert("تعذّر إنشاء الملف، حاول مرة أخرى.");
+  } finally {
+    wrap.classList.remove("generating");
+    btn.classList.remove("loading");
+    label.textContent = "تحميل الجدول PDF";
+  }
+}
+
+function detectCurrentDay(interactive = false){
+  const now = new Date();
+  const today = now.getDay();
+  const daysAr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+  const monthsAr = [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليوز", "غشت", "شتنبر", "أكتوبر", "نونبر", "دجنبر"
+  ];
+  
+  const dayName = daysAr[today];
+  const dateStr = `${dayName} ${now.getDate()} ${monthsAr[now.getMonth()]} ${now.getFullYear()}`;
+  const bannerText = document.getElementById("todayDateText");
+
+  const idx = DAYS.findIndex(d => d.jsDay === today);
+  if(idx !== -1){
+    if(bannerText) bannerText.innerHTML = `اليوم (Jour J) : <strong>${dateStr}</strong>`;
+    selectDay(idx);
+    if(interactive){
+      const panel = document.getElementById("panel-" + DAYS[idx].key);
+      if(panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  } else {
+    if(bannerText) bannerText.innerHTML = `اليوم (Jour J) : <strong>${dateStr}</strong> — عطلة نهاية الأسبوع 🌴`;
+    selectDay(0);
+  }
+}
+
+// Initialisation
+(function initDefault(){
+  buildTabs();
+  buildPanels();
+  buildPrintSheet();
+  detectCurrentDay(false);
+
+  // Mise à jour automatique chaque minute (détection séance en cours)
+  setInterval(() => {
+    buildPanels();
+    detectCurrentDay(false);
+  }, 60000);
+})();
+</script>
+</body>
+</html>

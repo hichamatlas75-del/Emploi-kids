@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة استعمال الزمن — الثانوية التأهيلية عبد الكريم الرايس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0B0F19;
+    --bg-card: #131B2E;
+    --border-color: rgba(255, 255, 255, 0.09);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --accent-hamza: #7A8B5E;
+    --accent-hamza-glow: rgba(122, 139, 94, 0.25);
+    --accent-adam: #0284C7;
+    --accent-adam-glow: rgba(2, 132, 199, 0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Almarai', sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(122, 139, 94, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(2, 132, 199, 0.09) 0%, transparent 40%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px) 0 0 / 100% 36px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .portal-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .school-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .school-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+  }
+
+  .portal-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .portal-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .portal-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+    border-radius: 24px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.22s ease, 
+                box-shadow 0.22s ease;
+  }
+
+  .portal-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 5px;
+    transition: height 0.2s ease;
+  }
+
+  /* Hamza Card Variant */
+  .portal-card.card-hamza::before {
+    background: linear-gradient(90deg, #D4E09B, #7A8B5E);
+  }
+  .portal-card.card-hamza:hover {
+    border-color: rgba(122, 139, 94, 0.55);
+    box-shadow: 0 16px 36px var(--accent-hamza-glow);
+    transform: translateY(-5px);
+  }
+
+  /* Adam & Rayane Card Variant */
+  .portal-card.card-adam::before {
+    background: linear-gradient(90deg, #38BDF8, #0284C7);
+  }
+  .portal-card.card-adam:hover {
+    border-color: rgba(2, 132, 199, 0.55);
+    box-shadow: 0 16px 36px var(--accent-adam-glow);
+    transform: translateY(-5px);
+  }
+
+  .card-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .card-level-badge {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+  }
+  .card-hamza .card-level-badge {
+    background: rgba(212, 224, 155, 0.15);
+    color: #D4E09B;
+    border: 1px solid rgba(212, 224, 155, 0.3);
+  }
+  .card-adam .card-level-badge {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38BDF8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .card-class-code {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .card-student-name {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-filiere {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 22px;
+    min-height: 40px;
+  }
+
+  .card-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 22px;
+    font-size: 12.5px;
+    color: #CBD5E1;
+  }
+
+  .card-highlights div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    transition: all 0.15s ease;
+  }
+
+  .card-hamza .btn-open {
+    background: #D4E09B;
+    color: #1B2420;
+  }
+  .card-hamza:hover .btn-open {
+    background: #E2ECB1;
+  }
+
+  .card-adam .btn-open {
+    background: #0284C7;
+    color: #FFFFFF;
+  }
+  .card-adam:hover .btn-open {
+    background: #039BE5;
+  }
+
+  .btn-open svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+  }
+  .portal-card:hover .btn-open svg {
+    transform: translateX(-4px);
+  }
+
+  /* FOOTER FEATURES */
+  .portal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px 32px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 12.5px;
+    text-align: center;
+  }
+
+  .portal-footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @media (max-width: 600px) {
+    .portal-title { font-size: 30px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="portal-header">
+    <div class="school-tag">
+      <span class="dot"></span>
+      <span>الثانوية التأهيلية عبد الكريم الرايس — فاس · 2026 – 2027</span>
+    </div>
+    <h1 class="portal-title">بوابة استعمال الزمن المدرسي</h1>
+    <p class="portal-desc">
+      اختر جدول الحصص المطلوب للولوج المباشر إليه بنقرة واحدة مع كافّة المميزات التفاعلية وتصدير PDF.
+    </p>
+  </header>
+
+  <!-- CARDS GRID -->
+  <main class="cards-grid">
+
+    <!-- CARD 1 : HAMZA -->
+    <a href="./emploi_hamza.html" class="portal-card card-hamza">
+      <div>
+        <div class="card-badge-row">
+          <span class="card-level-badge">السنة الأولى بكالوريا</span>
+          <span class="card-class-code">1 بك ع ت خ ف 2</span>
+        </div>
+        <h2 class="card-student-name">
+          جدول حمزة <span>📘</span>
+        </h2>
+        <p class="card-filiere">
+          شعبة العلوم التجريبية — خيار فرنسية (الموسم الدراسي 2026 – 2027)
+        </p>
+
+        <div class="card-highlights">
+          <div><span>🗓️</span> <span>كشف تفاعلي باليوم مع توقيت الحصص والقاعات</span></div>
+          <div><span>📍</span> <span>تحديد تلقائي فوري لليوم الحالي (Jour J)</span></div>
+          <div><span>📄</span> <span>تحميل جدول رسمي كامل بصيغة PDF (A4 Landscape)</span></div>
+        </div>
+      </div>
+
+      <button class="btn-open" tabindex="-1">
+        <span>فتح جدول حمزة</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+    </a>
+
+    <!-- CARD 2 : ADAM ET RAYANE -->
+    <a href="./emploi_adam_rayane.html" class="portal-card card-adam">
+      <div>
+        <div class="card-badge-row">
+          <span class="card-level-badge">السنة الثانية بكالوريا</span>
+          <span class="card-class-code">2 بك ع ف خ ف 1</span>
+        </div>
+        <h2 class="card-student-name">
+          جدول آدم وريان <span>🎓</span>
+        </h2>
+        <p class="card-filiere">
+          مسلك العلوم الفيزيائية — خيار فرنسية · مجموع الحصص: 31 ساعة
+        </p>
+
+        <div class="card-highlights">
+          <div><span>🧪</span> <span>حصص الأشغال التطبيقية بالتناوب (SVT / PC)</span></div>
+          <div><span>📍</span> <span>تتبع الحصة الجارية الآن في الوقت الفعلي</span></div>
+          <div><span>📄</span> <span>تحميل فوري لملف PDF وطباعة مباشرة فائقة الدقة</span></div>
+        </div>
+      </div>
+
+      <button class="btn-open" tabindex="-1">
+        <span>فتح جدول آدم وريان</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+    </a>
+
+  </main>
+
+  <!-- FOOTER FEATURES -->
+  <footer class="portal-footer">
+    <span>⚡ فتح فوري بنقرة واحدة</span>
+    <span>📱 متوافق تمامًا مع الهواتف والحواسيب</span>
+    <span>🖨️ طباعة متوافقة بنسبة 100% مع معايير A4</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
